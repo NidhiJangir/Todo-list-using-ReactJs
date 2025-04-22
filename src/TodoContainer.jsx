@@ -1,16 +1,23 @@
 import React from 'react'
 import Todo from './Todo'
 
-function TodoContainer({todos, delTodo}) {
+function TodoContainer({todos, delTodo,editTodo}) {
   return (
-    <div className="container">
-         {todos.map((todo,index)=> {
-            return (
-                <Todo todo={todo} index={index} delTodo={delTodo}/>
-            )
-         })} 
-      </div>
+  
+          <ul className="container">
+          
+      {todos.map((todo, index) => (
+          
+        <li key={index} className="todo">
+          {todo}
+          <button onClick={() => editTodo(index)}>Edit</button>
+          <button onClick={() => delTodo(index)}>Delete</button>
+        </li>
+        
+      ))}
+    </ul>
+ 
   )
 }
 
-export default TodoContainer
+export default TodoContainer 
