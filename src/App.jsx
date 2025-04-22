@@ -1,56 +1,35 @@
-import React, { useState } from 'react';
-import InputContainer from './InputContainer';
-import TodoContainer from './TodoContainer';
-import PhoneLogin from './PhoneLogin.jsx';
-import './App.css';
-
+import './App.css'
+import InputContainer from './InputContainer'
+import TodoContainer from './TodoContainer'
+import React,{useState} from 'react'
 function App() {
-  const [inputVal, setInputVal] = useState('');
-  const [todos, setTodos] = useState([]);
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentEditIndex, setCurrentEditIndex] = useState(null);
-  const [verified, setVerified] = useState(false); // OTP flag
+const [inputVal,setInputVal]=useState('')
+const [todos,setTodos]=useState([]);
 
-  function writeTodo(e) {
-    setInputVal(e.target.value);
+function writeTodo(e){ 
+    setInputVal(e.target.value)
+}
+function addTodo(){
+  if(inputVal!=''){
+    setTodos((prevTodos) => [...prevTodos , inputVal])
+    setInputVal('')
   }
-
-  function addTodo() {
-    if (inputVal !== '') {
-      if (isEditing) {
-        const updatedTodos = [...todos];
-        updatedTodos[currentEditIndex] = inputVal;
-        setTodos(updatedTodos);
-        setIsEditing(false);
-        setCurrentEditIndex(null);
-      } else {
-        setTodos((prevTodos) => [...prevTodos, inputVal]);
-      }
-      setInputVal('');
-    }
-  }
-
-  function delTodo(todoIndex) {
-    setTodos((prevTodos) => prevTodos.filter((_, index) => index !== todoIndex));
-  }
-
-  function editTodo(index) {
-    setInputVal(todos[index]);
-    setIsEditing(true);
-    setCurrentEditIndex(index);
-  }
-
-  // if (!verified) {
-  //   return <PhoneLogin onVerify={() => setVerified(true)} />
-  // }
-
+}
+function delTodo(todoIndex){
+  setTodos((prevTodos)=> prevTodos.filter((prevTodos,prevTodoIndex)=> {
+    return prevTodoIndex!=todoIndex
+  }))
+}
   return (
-    <main>
+    
+      <main>
       <h1>To Do List</h1>
-      <InputContainer inputVal={inputVal} writeTodo={writeTodo} addTodo={addTodo} isEditing={isEditing} />
-      <TodoContainer todos={todos} delTodo={delTodo} editTodo={editTodo} />
+      <InputContainer inputVal={inputVal} writeTodo={writeTodo} addTodo= {addTodo}/>
+      <TodoContainer todos={todos} delTodo={delTodo}/>
+      
     </main>
-  );
+    
+  )
 }
 
-export default App;
+export default App
